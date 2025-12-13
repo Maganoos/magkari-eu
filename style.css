@@ -1,0 +1,63 @@
+body {
+    color: #333;
+    font-size: 16px;
+    background-color: #ddd;
+    text-align: center;
+    font-family: "Open Sans", sans-serif;
+}
+
+a {
+    color: #333;
+}
+
+.icons>a>svg {
+    height: auto;
+    width: 30px;
+    fill: #333;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+a.nukeDeco {
+    text-decoration: none;
+}
+
+.icons {
+    gap: 10px;
+    align-items: center;
+}
+
+html.dark body {
+    background-color: #333;
+    color: #ddd;
+}
+
+html.dark .icons>a>svg {
+    fill: #ddd;
+}
+
+html.dark a {
+    color: #ddd;
+}
+
+#themeToggle {
+    border: 0;
+    background: none;
+    cursor: pointer;
+}
+
+.sun {
+    fill: black;
+}
+
+.moon {
+    fill: transparent;
+}
+
+html.dark .sun {
+    fill: transparent;
+}
+
+html.dark .moon {
+    fill: white;
+}
