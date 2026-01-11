@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Timer</title>
+        <style>
+            body {
+                color: darksalmon;
+                background-color: blanchedalmond;
+                font-family: "Courier New", monospace;
+                padding: 20px;
+                max-width: 800px;
+                margin: 0 auto;
+            }
+
+            h1 {
+                text-align: center;
+                font-size: 2em;
+                margin-bottom: 10px;
+            }
+
+            .timer-display {
+                text-align: center;
+                font-size: 4em;
+                font-weight: bold;
+                color: darksalmon;
+                margin: 20px 0;
+                font-variant-numeric: tabular-nums;
+            }
+
+            .controls {
+                text-align: center;
+                margin: 20px 0;
+            }
+
+            .input-group {
+                display: flex;
+                justify-content: center;
+                gap: 10px;
+                margin-bottom: 15px;
+                flex-wrap: wrap;
+            }
+
+            input[type="number"] {
+                width: 60px;
+                padding: 8px;
+                font-size: 1.2em;
+                background-color: blanchedalmond;
+                border: 2px solid darksalmon;
+                color: darksalmon;
+                text-align: center;
+                font-family: "Courier New", monospace;
+            }
+
+            input[type="number"]:focus {
+                outline: none;
+                border-color: burlywood;
+            }
+
+            label {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 5px;
+                font-size: 0.9em;
+            }
+
+            button {
+                background-color: darksalmon;
+                color: blanchedalmond;
+                border: none;
+                padding: 12px 24px;
+                font-size: 1.1em;
+                cursor: pointer;
+                margin: 5px;
+                font-family: "Courier New", monospace;
+                font-weight: bold;
+            }
+
+            button:hover {
+                background-color: burlywood;
+            }
+
+            button:disabled {
+                opacity: 0.5;
+                cursor: not-allowed;
+            }
+
+            .ascii-art {
+                color: darksalmon;
+                font-size: 0.8em;
+                line-height: 1.2;
+                margin: 30px 0;
+                display: flex;
+                justify-content: center;
+            }
+
+            footer {
+                color: burlywood;
+                font-size: x-small;
+                text-align: center;
+                margin-top: 40px;
+            }
+
+            .status {
+                text-align: center;
+                font-size: 1.2em;
+                margin: 10px 0;
+                min-height: 1.5em;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>TIMER</h1>
+
+        <div class="timer-display" id="display">00:00:00</div>
+
+        <div class="status" id="status"></div>
+
+        <div class="controls">
+            <div class="input-group">
+                <label>
+                    <span>Hours</span>
+                    <input
+                        type="number"
+                        id="hours"
+                        min="0"
+                        max="23"
+                        value="0"
+                    />
+                </label>
+                <label>
+                    <span>Minutes</span>
+                    <input
+                        type="number"
+                        id="minutes"
+                        min="0"
+                        max="59"
+                        value="0"
+                    />
+                </label>
+                <label>
+                    <span>Seconds</span>
+                    <input
+                        type="number"
+                        id="seconds"
+                        min="0"
+                        max="59"
+                        value="30"
+                    />
+                </label>
+            </div>
+
+            <div>
+                <button id="startBtn" onclick="startTimer()">START</button>
+                <button id="pauseBtn" onclick="pauseTimer()" disabled>
+                    PAUSE
+                </button>
+                <button id="resetBtn" onclick="resetTimer()">RESET</button>
+            </div>
+        </div>
+
+        <pre class="ascii-art">
+       .--.
+      |o_o |
+      |:_/ |
+     //   \ \
+    (|     | )
+   /'\_   _/`\
+   \___)=(___/
+
+   TIME FLIES
+    </pre
+        >
+
+        <footer>
+            The right time is always now. Unless you're waiting for something.
+            Then it's later.
+        </footer>
+
+        <script>
+            let totalSeconds = 0;
+            let remainingSeconds = 0;
+            let timerInterval = null;
+            let isRunning = false;
+
+            const display = document.getElementById("display");
+            const status = document.getElementById("status");
+            const startBtn = document.getElementById("startBtn");
+            const pauseBtn = document.getElementById("pauseBtn");
+            const resetBtn = document.getElementById("resetBtn");
+            const hoursInput = document.getElementById("hours");
+            const minutesInput = document.getElementById("minutes");
+            const secondsInput = document.getElementById("seconds");
+
+            function formatTime(seconds) {
+                const h = Math.floor(seconds / 3600);
+                const m = Math.floor((seconds % 3600) / 60);
+                const s = seconds % 60;
+                return `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
+            }
+
+            function updateDisplay() {
+                const timeString = formatTime(remainingSeconds);
+                display.textContent = timeString;
+                if (isRunning) {
+                    document.title = `${timeString} - Timer`;
+                }
+            }
+
+            function startTimer() {
+                if (!isRunning) {
+                    const h = parseInt(hoursInput.value) || 0;
+                    const m = parseInt(minutesInput.value) || 0;
+                    const s = parseInt(secondsInput.value) || 0;
+
+                    if (remainingSeconds === 0) {
+                        totalSeconds = h * 3600 + m * 60 + s;
+                        remainingSeconds = totalSeconds;
+                    }
+
+                    if (remainingSeconds === 0) {
+                        status.textContent = "Please set a time!";
+                        return;
+                    }
+
+                    isRunning = true;
+                    status.textContent = "Running...";
+                    startBtn.disabled = true;
+                    pauseBtn.disabled = false;
+                    hoursInput.disabled = true;
+                    minutesInput.disabled = true;
+                    secondsInput.disabled = true;
+
+                    timerInterval = setInterval(() => {
+                        remainingSeconds--;
+                        updateDisplay();
+
+                        if (remainingSeconds <= 0) {
+                            clearInterval(timerInterval);
+                            isRunning = false;
+                            status.textContent = "TIME'S UP!";
+                            document.title = "TIME'S UP! - Timer";
+                            startBtn.disabled = false;
+                            pauseBtn.disabled = true;
+                            hoursInput.disabled = false;
+                            minutesInput.disabled = false;
+                            secondsInput.disabled = false;
+
+                            // Play alarm sound using Web Audio API
+                            try {
+                                const audioContext = new (
+                                    window.AudioContext ||
+                                    window.webkitAudioContext
+                                )();
+
+                                // Play 3 beeps
+                                for (let i = 0; i < 3; i++) {
+                                    const oscillator =
+                                        audioContext.createOscillator();
+                                    const gainNode = audioContext.createGain();
+
+                                    oscillator.connect(gainNode);
+                                    gainNode.connect(audioContext.destination);
+
+                                    oscillator.frequency.value = 880;
+                                    oscillator.type = "square";
+
+                                    const startTime =
+                                        audioContext.currentTime + i * 0.4;
+                                    gainNode.gain.setValueAtTime(0, startTime);
+                                    gainNode.gain.linearRampToValueAtTime(
+                                        0.2,
+                                        startTime + 0.01,
+                                    );
+                                    gainNode.gain.exponentialRampToValueAtTime(
+                                        0.01,
+                                        startTime + 0.3,
+                                    );
+
+                                    oscillator.start(startTime);
+                                    oscillator.stop(startTime + 0.3);
+                                }
+                            } catch (e) {
+                                console.log("Audio not available");
+                            }
+                        }
+                    }, 1000);
+                }
+            }
+
+            function pauseTimer() {
+                if (isRunning) {
+                    clearInterval(timerInterval);
+                    isRunning = false;
+                    status.textContent = "Paused";
+                    document.title = `[PAUSED] ${formatTime(remainingSeconds)} - Timer`;
+                    startBtn.disabled = false;
+                    pauseBtn.disabled = true;
+                }
+            }
+
+            function resetTimer() {
+                clearInterval(timerInterval);
+                isRunning = false;
+                remainingSeconds = 0;
+                totalSeconds = 0;
+                updateDisplay();
+                status.textContent = "";
+                document.title = "Timer";
+                startBtn.disabled = false;
+                pauseBtn.disabled = true;
+                hoursInput.disabled = false;
+                minutesInput.disabled = false;
+                secondsInput.disabled = false;
+            }
+
+            updateDisplay();
+        </script>
+    </body>
+</html>
