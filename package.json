@@ -1,0 +1,20 @@
+{
+  "name": "www",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "eleventy",
+    "serve": "eleventy --serve"
+  },
+  "keywords": [],
+  "author": "Maganoos",
+  "license": "MIT",
+  "packageManager": "pnpm@10.28.2",
+  "dependencies": {
+    "@11ty/eleventy": "^3.1.2",
+    "@sardine/eleventy-plugin-tinycss": "^2.0.0",
+    "eleventy-plugin-icons": "^4.5.7",
+    "simple-icons": "^16.9.0"
+  }
+}
