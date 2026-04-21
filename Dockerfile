@@ -1,19 +1,24 @@
-FROM node:20-slim AS base
+# ---- base (Alpine + pnpm) ----
+FROM node:20-alpine AS base
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
+ENV CI=true
+
 RUN corepack enable
-COPY . /app
+
 WORKDIR /app
+COPY . .
 
-FROM base AS prod-deps
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --prod --frozen-lockfile
-
+# ---- build stage ----
 FROM base AS build
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
+RUN apk add --no-cache git
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store \
+    pnpm install --frozen-lockfile
 RUN pnpm run build
 
-FROM base
-COPY --from=prod-deps /app/node_modules /app/node_modules
-COPY --from=build /app/dist /app/_site
-EXPOSE 8080
-CMD [ "pnpm", "serve" ]
+# ---- final stage (tiny, no Node) ----
+FROM nginx:alpine
+COPY --from=build /app/_site /usr/share/nginx/html
+
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
