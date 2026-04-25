@@ -19,13 +19,12 @@ RUN --mount=type=cache,id=pnpm,target=/pnpm/store \
     pnpm install --frozen-lockfile
 RUN pnpm run build
 
-FROM node:20-alpine
+FROM caddy:alpine
 
-RUN npm install -g serve
+# Copy build output to Caddy's default web root
+COPY --from=build /app/_site /usr/share/caddy
 
-WORKDIR /app
-COPY --from=build /app/_site /app
+# Optional: custom config (see below)
+COPY Caddyfile /etc/caddy/Caddyfile
 
-EXPOSE 8080
-
-CMD ["serve", "-s", ".", "-l", "8080"]
+EXPOSE 80
