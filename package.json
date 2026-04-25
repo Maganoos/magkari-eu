@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "build": "eleventy",
-    "serve": "eleventy --serve"
+    "serve": "eleventy --serve",
+    "deploy": "pnpm run build && wrangler deploy",
+    "preview": "pnpm run build && wrangler dev"
   },
   "keywords": [],
   "author": "Maganoos",
@@ -16,5 +18,8 @@
     "@sardine/eleventy-plugin-tinycss": "^2.0.0",
     "eleventy-plugin-icons": "^4.5.7",
     "simple-icons": "^16.9.0"
+  },
+  "devDependencies": {
+    "wrangler": "^4.85.0"
   }
 }
