@@ -3,18 +3,16 @@
     {% for post in collections.posts | reverse %}
       <a href="{{ post.url }}" class="post-card">
         <h2 class="post-card-title">{{ post.data.title }}</h2>
+
         {% if post.data.description %}
           <p class="post-card-description">{{ post.data.description }}</p>
         {% endif %}
-        {% set gitDate = post.inputPath | getGitCommitDateFromPath %}
 
-        {% if gitDate %}
-          <p class="post-card-meta">
-            <time datetime="{{ gitDate }}">
-              {{ gitDate | displayDate("YYYY-MM-DD") }}
-            </time>
-          </p>
-        {% endif %}
+        <p class="post-card-meta">
+          <time datetime="{{ post.date }}">
+            {{ post.date | displayDate }}
+          </time>
+        </p>
       </a>
     {% endfor %}
   </div>

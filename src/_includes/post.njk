@@ -2,22 +2,24 @@
 layout: base.njk
 description: "A blog post."
 ---
+
 <article class="post">
   <div class="post-container">
     <header class="post-header">
       <a href="/posts" class="back-link">← Posts</a>
       <h1>{{ title }}</h1>
-      {% set gitDate = page.inputPath | getGitCommitDateFromPath %}
 
-      {% if gitDate %}
-        <p class="post-meta">
-          <time datetime="{{ gitDate }}">
-            {{ gitDate | displayDate("YYYY-MM-DD") }}
-          </time>
-        </p>
-      {% endif %}
-      <span class="meta__stats">About {{ content | readingTime }} reading time</span>
+      <p class="post-meta">
+        <time datetime="{{ page.date }}">
+          {{ page.date | displayDate }}
+        </time>
+      </p>
+
+      <span class="meta__stats">
+        About {{ content | readingTime }} reading time
+      </span>
     </header>
+
     <div class="post-content">
       {{ content | safe }}
     </div>

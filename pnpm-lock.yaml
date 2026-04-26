@@ -82,6 +82,10 @@ packages:
     resolution: {integrity: sha512-0vaV3Wt0surZ+oS1VdKKe0axeeupuM+l7W/Z866WFQwF+dGg2Tc/nmhk/5l74/Y55P8KyImnLN9CdygNw2huHg==}
     engines: {node: '>= 6'}
 
+  '@11ty/posthtml-urls@1.0.3':
+    resolution: {integrity: sha512-1YvhnkaNlFnnJic1rBMWmTC2adbuy+JQiBfl1Hecr1Wjjik1pQZmGyk/eC9zKX/FQv52s2Nht1Gi/UwhYqrBeg==}
+    engines: {node: '>= 6'}
+
   '@11ty/recursive-copy@4.0.3':
     resolution: {integrity: sha512-SX48BTLEGX8T/OsKWORsHAAeiDsbFl79Oa/0Wg/mv/d27b7trCVZs7fMHvpSgDvZz/fZqx5rDk8+nx5oyT7xBw==}
     engines: {node: '>=18'}
@@ -1764,7 +1768,7 @@ snapshots:
   '@11ty/eleventy-plugin-rss@3.0.0':
     dependencies:
       '@11ty/eleventy-utils': 2.0.7
-      '@11ty/posthtml-urls': 1.0.2
+      '@11ty/posthtml-urls': 1.0.3
       debug: 4.4.3
       posthtml: 0.16.7
     transitivePeerDependencies:
@@ -1815,6 +1819,13 @@ snapshots:
   '@11ty/lodash-custom@4.17.21': {}
 
   '@11ty/posthtml-urls@1.0.2':
+    dependencies:
+      evaluate-value: 2.0.0
+      http-equiv-refresh: 2.0.1
+      list-to-array: 1.1.0
+      parse-srcset: 1.0.2
+
+  '@11ty/posthtml-urls@1.0.3':
     dependencies:
       evaluate-value: 2.0.0
       http-equiv-refresh: 2.0.1

@@ -5,40 +5,24 @@ import safeLinks from "@sardine/eleventy-plugin-external-links";
 import poison from "eleventy-plugin-poison";
 import eleventySass from "@11tyrocks/eleventy-plugin-sass-lightningcss";
 import readingTime from "eleventy-plugin-reading-time";
-import { feedPlugin } from "@11ty/eleventy-plugin-rss";
+import rssPlugin from "@11ty/eleventy-plugin-rss";
 import EleventyPluginOgImage from "eleventy-plugin-og-image";
 import fs from "node:fs";
-import pluginGitCommitDate from "eleventy-plugin-git-commit-date";
 
 export default function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("assets/");
+
   eleventyConfig.addPlugin(faviconPlugin);
   eleventyConfig.addPlugin(safeLinks);
   eleventyConfig.addPlugin(eleventySass);
   eleventyConfig.addPlugin(poison);
   eleventyConfig.addPlugin(tinyCSS);
   eleventyConfig.addPlugin(readingTime);
-  eleventyConfig.addPlugin(pluginGitCommitDate);
+
   eleventyConfig.addPlugin(pluginIcons, {
     sources: [
       { name: "simple-icons", path: "node_modules/simple-icons/icons" },
     ],
-  });
-
-  eleventyConfig.addPlugin(feedPlugin, {
-    type: "atom",
-    outputPath: "posts/feed.xml",
-    collection: {
-      name: "posts",
-      limit: 0,
-    },
-    metadata: {
-      language: "en",
-      title: "Magnus",
-      subtitle: "Random shit I write",
-      base: "https://magkari.eu/",
-      author: { name: "Maganoos" },
-    },
   });
 
   eleventyConfig.addPlugin(EleventyPluginOgImage, {
@@ -54,16 +38,34 @@ export default function (eleventyConfig) {
     },
   });
 
-  eleventyConfig.addFilter("displayDate", (dateObj) => {
-    return new Date(dateObj).toISOString().slice(0, 10);
+  eleventyConfig.addPlugin(rssPlugin, {
+    type: "atom",
+    outputPath: "posts/feed.xml",
+    collection: {
+      name: "posts",
+      limit: 0,
+    },
+    metadata: {
+      language: "en",
+      title: "Magnus",
+      subtitle: "Random shit I write",
+      base: "https://magkari.eu/",
+      author: { name: "Maganoos" },
+    },
   });
-}
 
-export const config = {
-  dir: {
-    input: "src",
-    includes: "_includes",
-    data: "_data",
-    output: "_site",
-  },
-};
+  eleventyConfig.addFilter("displayDate", (dateObj) => {
+    const d = new Date(dateObj);
+    if (!dateObj || isNaN(d.getTime())) return "";
+    return d.toISOString().slice(0, 10);
+  });
+
+  return {
+    dir: {
+      input: "src",
+      includes: "_includes",
+      data: "_data",
+      output: "_site",
+    },
+  };
+}
