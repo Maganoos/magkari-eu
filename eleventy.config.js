@@ -3,18 +3,52 @@ import pluginIcons from "eleventy-plugin-icons";
 import faviconPlugin from "eleventy-favicon";
 import safeLinks from "@sardine/eleventy-plugin-external-links";
 import poison from "eleventy-plugin-poison";
+import eleventySass from "@11tyrocks/eleventy-plugin-sass-lightningcss";
+import readingTime from "eleventy-plugin-reading-time";
+import { feedPlugin } from "@11ty/eleventy-plugin-rss";
 
 export default function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("assets/");
-  eleventyConfig.addPlugin(tinyCSS);
   eleventyConfig.addPlugin(faviconPlugin);
   eleventyConfig.addPlugin(safeLinks);
-  eleventyConfig.addPlugin(poison, {
-    includeCSS: true,
-  });
+  eleventyConfig.addPlugin(eleventySass);
+  eleventyConfig.addPlugin(poison);
+  eleventyConfig.addPlugin(tinyCSS);
+  eleventyConfig.addPlugin(readingTime);
   eleventyConfig.addPlugin(pluginIcons, {
     sources: [
       { name: "simple-icons", path: "node_modules/simple-icons/icons" },
     ],
   });
+
+  eleventyConfig.addPlugin(feedPlugin, {
+    type: "atom",
+    outputPath: "feed.xml",
+    collection: {
+      name: "posts",
+      limit: 0,
+    },
+    metadata: {
+      language: "en",
+      title: "Magnus",
+      subtitle: "Random shit I write",
+      base: "https://magkari.eu/",
+      author: {
+        name: "Maganoos",
+      },
+    },
+  });
+
+  eleventyConfig.addFilter("date", (dateObj) => {
+    return new Date(dateObj).toISOString().slice(0, 10);
+  });
 }
+
+export const config = {
+  dir: {
+    input: "src",
+    includes: "_includes",
+    data: "_data",
+    output: "_site",
+  },
+};

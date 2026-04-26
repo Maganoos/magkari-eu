@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{{ title or "Magnus" }}</title>
+    <meta name="theme-color" content="#0a0a0a" />
+    <meta name="description" content="{{ description or "those who snow" }}" />
+    <link href="/assets/styles.css" rel="stylesheet" />
+    {% favicon './favicon.svg' %}
+  </head>
+  <body>
+    {% poison %}
+    <script src="https://keepandroidopen.org/banner.js?size=minimal&animation=off"></script>
+    <header class="site-header">
+      <h1 class="site-title">Magnus</h1>
+    </header>
+    <main class="site-main">
+      {{ content | safe }}
+    </main>
+    <footer class="footer">
+      <p>
+        Current commit:
+        <a target="_blank" href="https://github.com/Maganoos/magkari-eu/commit/{{ data.longHash }}">
+          {{ data.shortHash }}
+        </a>
+      </p>
+      <p>&copy; {{ data.year }} Maganoos</p>
+    </footer>
+  </body>
+</html>

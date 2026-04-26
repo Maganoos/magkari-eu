@@ -1,0 +1,19 @@
+{% if collections.posts and collections.posts.length > 0 %}
+  <div class="posts">
+    {% for post in collections.posts | reverse %}
+      <a href="{{ post.url }}" class="post-card">
+        <h2 class="post-card-title">{{ post.data.title }}</h2>
+        {% if post.data.excerpt %}
+          <p class="post-card-excerpt">{{ post.data.excerpt }}</p>
+        {% endif %}
+        {% if post.data.date %}
+          <p class="post-card-meta">
+            <time datetime="{{ post.data.date }}">
+              {{ post.data.date | date("YYYY-MM-DD") }}
+            </time>
+          </p>
+        {% endif %}
+      </a>
+    {% endfor %}
+  </div>
+{% endif %}
