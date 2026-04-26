@@ -6,6 +6,8 @@ import poison from "eleventy-plugin-poison";
 import eleventySass from "@11tyrocks/eleventy-plugin-sass-lightningcss";
 import readingTime from "eleventy-plugin-reading-time";
 import { feedPlugin } from "@11ty/eleventy-plugin-rss";
+import EleventyPluginOgImage from "eleventy-plugin-og-image";
+import fs from "node:fs";
 
 export default function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("assets/");
@@ -36,6 +38,19 @@ export default function (eleventyConfig) {
       author: {
         name: "Maganoos",
       },
+    },
+  });
+
+  eleventyConfig.addPlugin(EleventyPluginOgImage, {
+    satoriOptions: {
+      fonts: [
+        {
+          name: "Open Sans",
+          data: fs.readFileSync("./src/assets/font/OpenSans-Regular.ttf"),
+          weight: 700,
+          style: "normal",
+        },
+      ],
     },
   });
 

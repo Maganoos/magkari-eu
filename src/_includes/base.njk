@@ -5,8 +5,13 @@
     <meta name="viewport" content="width=device-width" />
     <title>{{ title or "Magnus" }}</title>
     <meta name="theme-color" content="#0a0a0a" />
-    <meta name="description" content="{{ description or "those who snow" }}" />
+    <meta name="description" content="{{ description or "Why are you reading this?" }}" />
+    <meta name="author" content="Maganoos" />
+    <meta property="og:url" content="https://magkari.eu/" />
+    <meta property="og:title" content="{{ title or "Magnus" }}" />
+    <meta property="og:description" content="{{ description or "Why are you reading this?" }}" />
     <link href="/assets/styles.css" rel="stylesheet" />
+    {% ogImage "./og-image.og.njk", { title: title or "Magnus" } %}
     {% favicon './favicon.svg' %}
   </head>
   <body>
