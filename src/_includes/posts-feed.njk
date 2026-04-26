@@ -3,8 +3,8 @@
     {% for post in collections.posts | reverse %}
       <a href="{{ post.url }}" class="post-card">
         <h2 class="post-card-title">{{ post.data.title }}</h2>
-        {% if post.data.excerpt %}
-          <p class="post-card-excerpt">{{ post.data.excerpt }}</p>
+        {% if post.data.description %}
+          <p class="post-card-description">{{ post.data.description }}</p>
         {% endif %}
         {% if post.data.date %}
           <p class="post-card-meta">
