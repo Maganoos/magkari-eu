@@ -1,10 +1,11 @@
-const childProcess = require("child_process");
+import childProcess from "node:child_process";
 
-module.exports = () => {
+export default () => {
   const latestGitCommitHash = childProcess
     .execSync("git rev-parse --short HEAD")
     .toString()
     .trim();
+
   const longGitCommitHash = childProcess
     .execSync("git rev-parse HEAD")
     .toString()

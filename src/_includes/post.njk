@@ -7,10 +7,12 @@ description: "A blog post."
     <header class="post-header">
       <a href="/posts" class="back-link">← Posts</a>
       <h1>{{ title }}</h1>
-      {% if date %}
+      {% set gitDate = page.inputPath | getGitCommitDateFromPath %}
+
+      {% if gitDate %}
         <p class="post-meta">
-          <time datetime="{{ date }}">
-            {{ date | date("YYYY-MM-DD") }}
+          <time datetime="{{ gitDate }}">
+            {{ gitDate | displayDate("YYYY-MM-DD") }}
           </time>
         </p>
       {% endif %}

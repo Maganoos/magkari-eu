@@ -1,13 +1,11 @@
-// COLOR PALETTE
 $palette-black: #0a0a0a;
 $palette-dark-gray: #1a1a1a;
 $palette-mid-gray: #2d2d2d;
 $palette-light-gray: #e8e8e8;
-$palette-accent-warm: #d4a373; // Warm gold
-$palette-accent-cool: #7ab8d4; // Cool blue
+$palette-accent-warm: #d4a373;
+$palette-accent-cool: #7ab8d4;
 $palette-subtle: #3d3d3d;
 
-// SEMANTIC COLORS
 $color-text-primary: $palette-light-gray;
 $color-text-secondary: #b0b0b0;
 $color-bg-primary: $palette-black;
@@ -17,7 +15,6 @@ $color-border: rgba(255, 255, 255, 0.08);
 $color-accent: $palette-accent-warm;
 $color-accent-secondary: $palette-accent-cool;
 
-// TYPOGRAPHY
 $font-display: "Open Sans", sans-serif;
 $font-body: "Open Sans", sans-serif;
 
@@ -35,7 +32,6 @@ $weight-medium: 500;
 $weight-semibold: 600;
 $weight-bold: 700;
 
-// SPACING
 $space-xs: 4px;
 $space-sm: 8px;
 $space-md: 12px;
@@ -44,21 +40,14 @@ $space-xl: 24px;
 $space-2xl: 32px;
 $space-3xl: 48px;
 
-// ICONS
 $icon-size: 24px;
 $icon-spacing: 8px;
 $icon-gap: 16px;
 
-// TRANSITIONS
 $transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
 $transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
 $transition-slow: 400ms cubic-bezier(0.4, 0, 0.2, 1);
 
-// ============================================
-// TYPOGRAPHY
-// ============================================
-
-// TYPOGRAPHY IMPORTS
 @font-face {
     font-family: "Open Sans";
     src: url("/assets/font/OpenSans-VariableFont_wdth,wght.ttf")
@@ -99,10 +88,6 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
-// ============================================
-// LAYOUT
-// ============================================
-
 .site-header {
     padding: $space-2xl $space-lg $space-xl $space-lg;
     border-bottom: 1px solid $color-border;
@@ -119,10 +104,6 @@ body {
     min-height: calc(100vh - 200px);
     padding-bottom: $space-2xl;
 }
-
-// ============================================
-// HEADINGS & TEXT
-// ============================================
 
 h1,
 h2,
@@ -156,10 +137,6 @@ p {
     color: $color-text-secondary;
     font-weight: $weight-light;
 }
-
-// ============================================
-// LINKS & INTERACTIONS
-// ============================================
 
 a {
     color: $color-accent;
@@ -205,10 +182,6 @@ a {
         border-radius: 2px;
     }
 }
-
-// ============================================
-// BUTTONS
-// ============================================
 
 button,
 .btn {
@@ -256,10 +229,6 @@ button,
     }
 }
 
-// ============================================
-// ICONS
-// ============================================
-
 .icons {
     display: flex;
     gap: $icon-gap;
@@ -293,10 +262,6 @@ button,
         }
     }
 }
-
-// ============================================
-// POST HEADER
-// ============================================
 
 .post-container {
     max-width: 800px;
@@ -369,10 +334,6 @@ button,
     }
 }
 
-// ============================================
-// FOOTER
-// ============================================
-
 .footer {
     position: fixed;
     left: 0;
@@ -396,10 +357,6 @@ button,
     }
 }
 
-// ============================================
-// ACCESSIBILITY
-// ============================================
-
 .visually-hidden,
 .sr-only {
     position: absolute;
@@ -413,7 +370,6 @@ button,
     border: 0;
 }
 
-// Reduced motion support
 @media (prefers-reduced-motion: reduce) {
     * {
         animation-duration: 0.01ms !important;
@@ -423,18 +379,10 @@ button,
     }
 }
 
-// ============================================
-// FOCUS VISIBLE OUTLINE
-// ============================================
-
 :focus-visible {
     outline: 2px solid $color-accent;
     outline-offset: 2px;
 }
-
-// ============================================
-// POST FEED
-// ============================================
 
 .posts-header {
     padding: $space-xl 0 $space-lg 0;
@@ -499,10 +447,6 @@ button,
     margin: 0;
     font-weight: $weight-light;
 }
-
-// ============================================
-// SCROLLBAR
-// ============================================
 
 ::-webkit-scrollbar {
     width: 10px;

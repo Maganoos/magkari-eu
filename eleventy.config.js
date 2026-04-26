@@ -8,6 +8,7 @@ import readingTime from "eleventy-plugin-reading-time";
 import { feedPlugin } from "@11ty/eleventy-plugin-rss";
 import EleventyPluginOgImage from "eleventy-plugin-og-image";
 import fs from "node:fs";
+import pluginGitCommitDate from "eleventy-plugin-git-commit-date";
 
 export default function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("assets/");
@@ -17,6 +18,7 @@ export default function (eleventyConfig) {
   eleventyConfig.addPlugin(poison);
   eleventyConfig.addPlugin(tinyCSS);
   eleventyConfig.addPlugin(readingTime);
+  eleventyConfig.addPlugin(pluginGitCommitDate);
   eleventyConfig.addPlugin(pluginIcons, {
     sources: [
       { name: "simple-icons", path: "node_modules/simple-icons/icons" },
@@ -25,7 +27,7 @@ export default function (eleventyConfig) {
 
   eleventyConfig.addPlugin(feedPlugin, {
     type: "atom",
-    outputPath: "feed.xml",
+    outputPath: "posts/feed.xml",
     collection: {
       name: "posts",
       limit: 0,
@@ -35,9 +37,7 @@ export default function (eleventyConfig) {
       title: "Magnus",
       subtitle: "Random shit I write",
       base: "https://magkari.eu/",
-      author: {
-        name: "Maganoos",
-      },
+      author: { name: "Maganoos" },
     },
   });
 
@@ -54,7 +54,7 @@ export default function (eleventyConfig) {
     },
   });
 
-  eleventyConfig.addFilter("date", (dateObj) => {
+  eleventyConfig.addFilter("displayDate", (dateObj) => {
     return new Date(dateObj).toISOString().slice(0, 10);
   });
 }

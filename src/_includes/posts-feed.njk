@@ -6,10 +6,12 @@
         {% if post.data.description %}
           <p class="post-card-description">{{ post.data.description }}</p>
         {% endif %}
-        {% if post.data.date %}
+        {% set gitDate = post.inputPath | getGitCommitDateFromPath %}
+
+        {% if gitDate %}
           <p class="post-card-meta">
-            <time datetime="{{ post.data.date }}">
-              {{ post.data.date | date("YYYY-MM-DD") }}
+            <time datetime="{{ gitDate }}">
+              {{ gitDate | displayDate("YYYY-MM-DD") }}
             </time>
           </p>
         {% endif %}
