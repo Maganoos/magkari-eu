@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build": "eleventy",
-    "serve": "eleventy --serve"
+    "serve": "eleventy --serve",
+    "new-post": "node scripts/new-post.js"
   },
   "keywords": [],
   "author": "Maganoos",

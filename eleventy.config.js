@@ -19,6 +19,12 @@ export default function (eleventyConfig) {
   eleventyConfig.addPlugin(tinyCSS);
   eleventyConfig.addPlugin(readingTime);
 
+  eleventyConfig.addCollection("posts", (collectionApi) => {
+    return collectionApi
+      .getFilteredByGlob("src/posts/**/*.md")
+      .sort((a, b) => new Date(b.data.date) - new Date(a.data.date));
+  });
+
   eleventyConfig.addPlugin(pluginIcons, {
     sources: [
       { name: "simple-icons", path: "node_modules/simple-icons/icons" },
