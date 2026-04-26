@@ -5,7 +5,7 @@ import safeLinks from "@sardine/eleventy-plugin-external-links";
 import poison from "eleventy-plugin-poison";
 import eleventySass from "@11tyrocks/eleventy-plugin-sass-lightningcss";
 import readingTime from "eleventy-plugin-reading-time";
-import rssPlugin from "@11ty/eleventy-plugin-rss";
+import { feedPlugin } from "@11ty/eleventy-plugin-rss";
 import EleventyPluginOgImage from "eleventy-plugin-og-image";
 import fs from "node:fs";
 
@@ -38,7 +38,7 @@ export default function (eleventyConfig) {
     },
   });
 
-  eleventyConfig.addPlugin(rssPlugin, {
+  eleventyConfig.addPlugin(feedPlugin, {
     type: "atom",
     outputPath: "posts/feed.xml",
     collection: {
