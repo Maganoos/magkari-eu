@@ -22,7 +22,7 @@ export default function (eleventyConfig) {
   eleventyConfig.addCollection("posts", (collectionApi) => {
     return collectionApi
       .getFilteredByGlob("src/posts/**/*.md")
-      .sort((a, b) => new Date(b.data.date) - new Date(a.data.date));
+      .sort((a, b) => b.date - a.date);
   });
 
   eleventyConfig.addPlugin(pluginIcons, {

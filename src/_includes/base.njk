@@ -17,20 +17,13 @@
   <body>
     {% poison %}
     <script src="https://keepandroidopen.org/banner.js?size=minimal&animation=off"></script>
-    <header class="site-header">
-      <h1 class="site-title">Magnus</h1>
-    </header>
+
+    {% include "components/header.njk" %}
+
     <main class="site-main">
       {{ content | safe }}
     </main>
-    <footer class="footer">
-      <p>
-        Current commit:
-        <a target="_blank" href="https://github.com/Maganoos/magkari-eu/commit/{{ data.longHash }}">
-          {{ data.shortHash }}
-        </a>
-      </p>
-      <p>&copy; {{ data.year }} Maganoos</p>
-    </footer>
+
+    {% include "components/footer.njk" %}
   </body>
 </html>
