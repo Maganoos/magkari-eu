@@ -94,12 +94,191 @@ body {
     padding: $space-2xl $space-lg $space-xl $space-lg;
     border-bottom: 1px solid $color-border;
     text-align: center;
+
+    &.business-card {
+        padding: $space-3xl $space-lg;
+        background: linear-gradient(
+            135deg,
+            rgba($color-bg-secondary, 0.5) 0%,
+            rgba($color-bg-tertiary, 0.3) 100%
+        );
+    }
+}
+
+.card-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: $space-3xl;
+    max-width: 900px;
+    margin: 0 auto;
+    animation: slideInCard 0.6s ease-out;
+
+    @media (max-width: 768px) {
+        flex-direction: column;
+        gap: $space-2xl;
+    }
+}
+
+@keyframes slideInCard {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card-image {
+    flex-shrink: 0;
+    position: relative;
+    animation: scaleInImage 0.7s ease-out 0.1s both;
+
+    &::before {
+        content: "";
+        position: absolute;
+        inset: -8px;
+        background: linear-gradient(
+            135deg,
+            $color-accent,
+            $color-accent-secondary
+        );
+        border-radius: 12px;
+        opacity: 0;
+        animation: glowPulse 3s ease-in-out infinite;
+        z-index: -1;
+    }
+}
+
+@keyframes scaleInImage {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes glowPulse {
+    0%,
+    100% {
+        opacity: 0.3;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.6;
+        transform: scale(1.05);
+    }
+}
+
+.profile-image {
+    width: 120px;
+    height: 120px;
+    border-radius: 12px;
+    object-fit: cover;
+    border: 2px solid $color-border;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    transition: all $transition-normal;
+    display: block;
+
+    @media (max-width: 768px) {
+        width: 140px;
+        height: 140px;
+    }
+
+    @media (max-width: 480px) {
+        width: 100px;
+        height: 100px;
+    }
+}
+
+.card-link {
+    text-decoration: none;
+    color: inherit;
+
+    &::after {
+        display: none;
+    }
+
+    &:hover {
+        color: inherit;
+    }
+
+    &:focus-visible {
+        outline: 2px solid $color-accent;
+        outline-offset: 4px;
+        border-radius: 4px;
+    }
+}
+
+.card-content {
+    flex: 1;
+    text-align: left;
+    max-width: 500px;
+    animation: fadeInContent 0.7s ease-out 0.2s both;
+
+    @media (max-width: 768px) {
+        text-align: center;
+        max-width: 100%;
+    }
+}
+
+@keyframes fadeInContent {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
 
 .site-title {
     font-size: $size-3xl;
-    margin: 0;
+    margin: 0 0 $space-md 0;
     color: $color-text-primary;
+    font-weight: $weight-bold;
+    letter-spacing: -1px;
+    background: linear-gradient(135deg, $color-accent, $color-accent-secondary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.card-subtitle {
+    font-size: $size-lg;
+    color: $color-accent;
+    margin: 0 0 $space-lg 0;
+    font-weight: $weight-medium;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    opacity: 0.9;
+}
+
+.card-divider {
+    width: 60px;
+    height: 2px;
+    background: linear-gradient(90deg, $color-accent, transparent);
+    margin: $space-lg 0;
+    border-radius: 1px;
+
+    @media (max-width: 768px) {
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+.card-description {
+    font-size: $size-base;
+    color: $color-text-secondary;
+    margin: 0 0 $space-2xl 0;
+    line-height: 1.7;
+    font-weight: $weight-light;
 }
 
 .site-main {
@@ -247,7 +426,7 @@ button,
         > svg {
             width: $icon-size;
             height: auto;
-            fill: $color-text-primary;
+            fill: $color-text-secondary;
             transition: fill $transition-normal;
             margin-left: $icon-spacing;
             margin-right: $icon-spacing;
