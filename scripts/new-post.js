@@ -21,7 +21,7 @@ const content = `---
 title: "${title}"
 description: "Write your description here..."
 date: ${date}
-layout: post.njk
+layout: layouts/post.njk
 tags: posts
 ---
 

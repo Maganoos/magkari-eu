@@ -8,6 +8,9 @@ import readingTime from "eleventy-plugin-reading-time";
 import { feedPlugin } from "@11ty/eleventy-plugin-rss";
 import EleventyPluginOgImage from "eleventy-plugin-og-image";
 import fs from "node:fs";
+import { url } from "node:inspector/promises";
+
+const baseUrl = "https://magkari.eu";
 
 export default function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("assets/");
@@ -32,6 +35,13 @@ export default function (eleventyConfig) {
   });
 
   eleventyConfig.addPlugin(EleventyPluginOgImage, {
+    urlPath: "/og-images/",
+
+    async shortcodeOutput(ogImage) {
+      const url = await ogImage.outputUrl();
+      return `<meta property="og:image" content="${baseUrl}${url}">`;
+    },
+
     satoriOptions: {
       fonts: [
         {
@@ -55,7 +65,7 @@ export default function (eleventyConfig) {
       language: "en",
       title: "Magnus",
       subtitle: "Random shit I write",
-      base: "https://magkari.eu/",
+      base: baseUrl,
       author: { name: "Maganoos" },
     },
   });
@@ -65,6 +75,8 @@ export default function (eleventyConfig) {
     if (!dateObj || isNaN(d.getTime())) return "";
     return d.toISOString().slice(0, 10);
   });
+
+  eleventyConfig.addFilter("absoluteUrl", (url) => baseUrl + url);
 
   return {
     dir: {
