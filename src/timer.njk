@@ -1,0 +1,207 @@
+---
+layout: layouts/base.njk
+title: Posts
+description: All posts
+permalink: /timer/
+---
+
+<div class="timer">
+    <h1 class="timer-title">TIMER</h1>
+
+    <div class="timer-display" id="display">00:00:00</div>
+
+    <div class="timer-status" id="status"></div>
+
+    <div class="timer-controls">
+        <div class="timer-input-group">
+            <label class="timer-label">
+                <span>Hours</span>
+                <input class="timer-input" type="number" id="hours" min="0" max="23" value="0" />
+            </label>
+            <label class="timer-label">
+                <span>Minutes</span>
+                <input class="timer-input" type="number" id="minutes" min="0" max="59" value="0" />
+            </label>
+            <label class="timer-label">
+                <span>Seconds</span>
+                <input class="timer-input" type="number" id="seconds" min="0" max="59" value="30" />
+            </label>
+        </div>
+
+        <div class="timer-buttons">
+            <button class="timer-btn" id="startBtn" onclick="startTimer()">START</button>
+            <button class="timer-btn" id="pauseBtn" onclick="pauseTimer()" disabled>PAUSE</button>
+            <button class="timer-btn" id="resetBtn" onclick="resetTimer()">RESET</button>
+        </div>
+    </div>
+
+    <pre class="timer-ascii">
+.--.
+|o_o |
+|:_/ |
+//   \ \
+(|     | )
+/'\_   _/`\
+\___)=(___/
+
+TIME FLIES
+</pre>
+
+    <footer class="timer-footer">
+        The right time is always now. Unless you're waiting for something.
+        Then it's later.
+    </footer>
+</div>
+
+<script>
+    let totalSeconds = 0;
+    let remainingSeconds = 0;
+    let timerInterval = null;
+    let alarmInterval = null;
+    let isRunning = false;
+
+    const display = document.getElementById("display");
+    const status = document.getElementById("status");
+    const startBtn = document.getElementById("startBtn");
+    const pauseBtn = document.getElementById("pauseBtn");
+    const resetBtn = document.getElementById("resetBtn");
+    const hoursInput = document.getElementById("hours");
+    const minutesInput = document.getElementById("minutes");
+    const secondsInput = document.getElementById("seconds");
+
+    function formatTime(seconds) {
+        const h = Math.floor(seconds / 3600);
+        const m = Math.floor((seconds % 3600) / 60);
+        const s = seconds % 60;
+        return `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
+    }
+
+    function updateDisplay() {
+        const timeString = formatTime(remainingSeconds);
+        display.textContent = timeString;
+        if (isRunning) {
+            document.title = `${timeString} - Timer`;
+        }
+    }
+
+    function startTimer() {
+        if (!isRunning) {
+            const h = parseInt(hoursInput.value) || 0;
+            const m = parseInt(minutesInput.value) || 0;
+            const s = parseInt(secondsInput.value) || 0;
+
+            if (remainingSeconds === 0) {
+                totalSeconds = h * 3600 + m * 60 + s;
+                remainingSeconds = totalSeconds;
+            }
+
+            if (remainingSeconds === 0) {
+                status.textContent = "Please set a time!";
+                return;
+            }
+
+            isRunning = true;
+            status.textContent = "Running...";
+            startBtn.disabled = true;
+            pauseBtn.disabled = false;
+            hoursInput.disabled = true;
+            minutesInput.disabled = true;
+            secondsInput.disabled = true;
+
+            timerInterval = setInterval(() => {
+                remainingSeconds--;
+                updateDisplay();
+
+                if (remainingSeconds <= 0) {
+                    clearInterval(timerInterval);
+                    isRunning = false;
+                    status.textContent = "TIME'S UP!";
+                    document.title = "TIME'S UP! - Timer";
+                    startBtn.disabled = false;
+                    pauseBtn.disabled = true;
+                    hoursInput.disabled = false;
+                    minutesInput.disabled = false;
+                    secondsInput.disabled = false;
+
+                    // Play repeating alarm sound
+                    function playAlarm() {
+                        try {
+                            const audioContext = new (
+                                window.AudioContext ||
+                                window.webkitAudioContext
+                            )();
+
+                            // Play 3 beeps
+                            for (let i = 0; i < 3; i++) {
+                                const oscillator =
+                                    audioContext.createOscillator();
+                                const gainNode =
+                                    audioContext.createGain();
+
+                                oscillator.connect(gainNode);
+                                gainNode.connect(
+                                    audioContext.destination,
+                                );
+
+                                oscillator.frequency.value = 880;
+                                oscillator.type = "square";
+
+                                const startTime =
+                                    audioContext.currentTime + i * 0.4;
+                                gainNode.gain.setValueAtTime(
+                                    0,
+                                    startTime,
+                                );
+                                gainNode.gain.linearRampToValueAtTime(
+                                    0.2,
+                                    startTime + 0.01,
+                                );
+                                gainNode.gain.exponentialRampToValueAtTime(
+                                    0.01,
+                                    startTime + 0.3,
+                                );
+
+                                oscillator.start(startTime);
+                                oscillator.stop(startTime + 0.3);
+                            }
+                        } catch (e) {
+                            console.log("Audio not available");
+                        }
+                    }
+
+                    playAlarm();
+                    alarmInterval = setInterval(playAlarm, 2000);
+                }
+            }, 1000);
+        }
+    }
+
+    function pauseTimer() {
+        if (isRunning) {
+            clearInterval(timerInterval);
+            isRunning = false;
+            status.textContent = "Paused";
+            document.title = `[PAUSED] ${formatTime(remainingSeconds)} - Timer`;
+            startBtn.disabled = false;
+            pauseBtn.disabled = true;
+        }
+    }
+
+    function resetTimer() {
+        clearInterval(timerInterval);
+        clearInterval(alarmInterval);
+        isRunning = false;
+        remainingSeconds = 0;
+        totalSeconds = 0;
+        updateDisplay();
+        status.textContent = "";
+        document.title = "Timer";
+        startBtn.disabled = false;
+        pauseBtn.disabled = true;
+        hoursInput.disabled = false;
+        minutesInput.disabled = false;
+        secondsInput.disabled = false;
+    }
+
+    updateDisplay();
+</script>

@@ -8,7 +8,6 @@ import readingTime from "eleventy-plugin-reading-time";
 import { feedPlugin } from "@11ty/eleventy-plugin-rss";
 import EleventyPluginOgImage from "eleventy-plugin-og-image";
 import fs from "node:fs";
-import { url } from "node:inspector/promises";
 
 const baseUrl = "https://magkari.eu";
 
