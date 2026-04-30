@@ -3,28 +3,27 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <title>{{ title or "Magnus" }}</title>
+    {%- set pageTitle = title or "Magnus" -%}
+    {%- set pageDescription = description or "Why are you reading this?" -%}
+    <title>{{ pageTitle }}</title>
     <meta name="theme-color" content="#0a0a0a" />
-    <meta name="description" content="{{ description or "Why are you reading this?" }}" />
+    <meta name="description" content="{{ pageDescription }}" />
     <meta name="author" content="Maganoos" />
     <meta property="og:url" content="{{ page.url | absoluteUrl }}" />
-    <meta property="og:title" content="{{ title or "Magnus" }}" />
-    <meta property="og:description" content="{{ description or "Why are you reading this?" }}" />
+    <meta property="og:title" content="{{ pageTitle }}" />
+    <meta property="og:description" content="{{ pageDescription }}" />
     <meta property="og:type" content="{% if layout == 'layouts/post.njk' %}article{% else %}website{% endif %}" />
     <link href="/assets/styles.css" rel="stylesheet" />
-    {% ogImage "./og-image.og.njk", { title: title or "Magnus" } %}
+    {% ogImage "./og-image.og.njk", { title: pageTitle, description: pageDescription } %}
     {% favicon './favicon.svg' %}
   </head>
   <body>
     {% poison %}
     <script src="https://keepandroidopen.org/banner.js?size=minimal&animation=off"></script>
-
     {% include "components/header.njk" %}
-
     <main class="site-main">
       {{ content | safe }}
     </main>
-
     {% include "components/footer.njk" %}
   </body>
 </html>
