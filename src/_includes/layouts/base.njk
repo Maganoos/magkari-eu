@@ -10,6 +10,7 @@
     <meta property="og:url" content="{{ page.url | absoluteUrl }}" />
     <meta property="og:title" content="{{ title or "Magnus" }}" />
     <meta property="og:description" content="{{ description or "Why are you reading this?" }}" />
+    <meta property="og:type" content="{% if layout == 'layouts/post.njk' %}article{% else %}website{% endif %}" />
     <link href="/assets/styles.css" rel="stylesheet" />
     {% ogImage "./og-image.og.njk", { title: title or "Magnus" } %}
     {% favicon './favicon.svg' %}
