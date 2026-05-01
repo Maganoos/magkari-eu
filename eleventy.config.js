@@ -9,6 +9,8 @@ import { feedPlugin } from "@11ty/eleventy-plugin-rss";
 import EleventyPluginOgImage from "eleventy-plugin-og-image";
 import fs from "node:fs";
 
+const baseUrl = process.env.URL;
+
 export default function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("assets/");
 
@@ -36,7 +38,7 @@ export default function (eleventyConfig) {
 
     async shortcodeOutput(ogImage) {
       const url = await ogImage.outputUrl();
-      return `<meta property="og:image" content="${process.env.CF_PAGES_URL || "http://localhost:8080"}${url}">`;
+      return `<meta property="og:image" content="${baseUrl}${url}">`;
     },
 
     satoriOptions: {
@@ -62,7 +64,7 @@ export default function (eleventyConfig) {
       language: "en",
       title: "Magnus",
       subtitle: "Random shit I write",
-      base: process.env.CF_PAGES_URL || "http://localhost:8080",
+      base: baseUrl,
       author: { name: "Maganoos" },
     },
   });
@@ -75,10 +77,7 @@ export default function (eleventyConfig) {
 
   eleventyConfig.addFilter(
     "toAbsoluteUrl",
-    function (
-      url = "",
-      base = process.env.CF_PAGES_URL || "http://localhost:8080",
-    ) {
+    function (url = "", base = baseUrl) {
       try {
         return new URL(url, base).href;
       } catch (err) {
