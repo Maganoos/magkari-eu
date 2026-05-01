@@ -9,7 +9,7 @@ import { feedPlugin } from "@11ty/eleventy-plugin-rss";
 import EleventyPluginOgImage from "eleventy-plugin-og-image";
 import fs from "node:fs";
 
-const baseUrl = "https://magkari.eu";
+const baseUrl = process.env.CF_PAGES_URL || "http://localhost:8080";
 
 export default function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("assets/");
@@ -86,6 +86,8 @@ export default function (eleventyConfig) {
       }
     },
   );
+
+  eleventyConfig.addShortcode("year", () => `${new Date().getFullYear()}`);
 
   return {
     dir: {

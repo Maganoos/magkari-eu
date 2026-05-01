@@ -12,7 +12,6 @@ export default () => {
     .trim();
 
   return {
-    year: new Date().getFullYear(),
     shortHash: latestGitCommitHash,
     longHash: longGitCommitHash,
   };
