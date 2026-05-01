@@ -9,7 +9,7 @@ import { feedPlugin } from "@11ty/eleventy-plugin-rss";
 import EleventyPluginOgImage from "eleventy-plugin-og-image";
 import fs from "node:fs";
 
-const baseUrl = process.env.URL;
+const baseUrl = process.env.URL || "http://localhost:8080";
 
 export default function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("assets/");
