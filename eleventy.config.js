@@ -75,7 +75,17 @@ export default function (eleventyConfig) {
     return d.toISOString().slice(0, 10);
   });
 
-  eleventyConfig.addFilter("absoluteUrl", (url) => baseUrl + url);
+  eleventyConfig.addFilter(
+    "toAbsoluteUrl",
+    function (url = "", base = baseUrl) {
+      try {
+        return new URL(url, base).href;
+      } catch (err) {
+        console.error(err);
+        return url;
+      }
+    },
+  );
 
   return {
     dir: {

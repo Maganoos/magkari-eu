@@ -9,7 +9,7 @@
     <meta name="theme-color" content="#0a0a0a" />
     <meta name="description" content="{{ pageDescription }}" />
     <meta name="author" content="Maganoos" />
-    <meta property="og:url" content="{{ page.url | absoluteUrl }}" />
+    <meta property="og:url" content="{{ page.url | toAbsoluteUrl }}" />
     <meta property="og:title" content="{{ pageTitle }}" />
     <meta property="og:description" content="{{ pageDescription }}" />
     <meta property="og:type" content="{% if layout == 'layouts/post.njk' %}article{% else %}website{% endif %}" />
