@@ -123,7 +123,6 @@ TIME FLIES
                     minutesInput.disabled = false;
                     secondsInput.disabled = false;
 
-                    // Play repeating alarm sound
                     function playAlarm() {
                         try {
                             const audioContext = new (
@@ -131,7 +130,6 @@ TIME FLIES
                                 window.webkitAudioContext
                             )();
 
-                            // Play 3 beeps
                             for (let i = 0; i < 3; i++) {
                                 const oscillator =
                                     audioContext.createOscillator();

@@ -8,6 +8,7 @@ import readingTime from "eleventy-plugin-reading-time";
 import { feedPlugin } from "@11ty/eleventy-plugin-rss";
 import EleventyPluginOgImage from "eleventy-plugin-og-image";
 import fs from "node:fs";
+import sitemap from "@quasibit/eleventy-plugin-sitemap";
 
 const baseUrl = process.env.URL || "http://localhost:8080";
 
@@ -67,6 +68,18 @@ export default function (eleventyConfig) {
       base: baseUrl,
       author: { name: "Maganoos" },
     },
+  });
+
+  eleventyConfig.addPlugin(sitemap, {
+    sitemap: {
+      hostname: baseUrl,
+    },
+  });
+
+  eleventyConfig.addCollection("htmlPages", function (collectionApi) {
+    return collectionApi.getAll().filter((item) => {
+      return item.outputPath && item.outputPath.endsWith(".html");
+    });
   });
 
   eleventyConfig.addFilter("displayDate", (dateObj) => {
