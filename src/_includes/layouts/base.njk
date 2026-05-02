@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width" />
     {%- set pageTitle = title or "Magnus" -%}
     {%- set pageDescription = description or "Why are you reading this?" -%}
+    {% if pageTitle != "Magnus"%}
+    {%- set pageTitle = pageTitle + " - Magnus" -%}
+    {%endif%}
     <title>{{ pageTitle }}</title>
     <meta name="theme-color" content="#0a0a0a" />
     <meta name="description" content="{{ pageDescription }}" />
