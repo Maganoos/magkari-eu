@@ -754,7 +754,7 @@ button,
     }
 }
 
-.timer-ascii {
+.ascii {
     color: $color-accent;
     font-size: 0.8em;
     line-height: 1.2;
@@ -762,10 +762,30 @@ button,
     display: flex;
     justify-content: center;
     font-family: "Courier New", monospace;
+    text-decoration: none !important;
 }
 
 .timer-footer {
     color: $color-text-secondary;
     font-size: $size-sm;
     margin-top: $space-2xl;
+}
+
+.error-content {
+    text-align: center;
+    margin: $space-3xl 0;
+
+    h2 {
+        color: $color-text-secondary;
+        margin-bottom: $space-lg;
+    }
+}
+
+.error-footer {
+    text-align: center;
+    margin-top: $space-3xl;
+    padding-top: $space-2xl;
+    border-top: 1px solid $color-border;
+    color: $color-text-secondary;
+    font-size: $size-sm;
 }

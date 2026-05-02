@@ -20,7 +20,9 @@
   <body>
     {% poison %}
     <script src="https://keepandroidopen.org/banner.js?size=minimal&animation=off"></script>
+    {% if showHeader != false %}
     {% include "components/header.njk" %}
+    {% endif %}
     <main class="site-main">
       {{ content | safe }}
     </main>
